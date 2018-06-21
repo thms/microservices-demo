@@ -1,0 +1,27 @@
+brew services start mysql
+
+docker pull landoop/kafka-lenses-dev
+docker run -p 3030:3030 --rm --net=host \
+    -e EULA="https://dl.lenses.stream/d/?id=CHECK_YOUR_EMAIL_FOR_KEY" \
+    landoop/kafka-lenses-dev
+
+docker pull landoop/kafka-topics-ui
+docker run --rm -it -p 8000:8000 \
+       -e "KAFKA_REST_PROXY_URL=http://localhost:8082" \
+       landoop/kafka-topics-ui
+
+
+purpose
+demonstrate / understand key concepts and strategies
+
+what: classic microservice architecture with kafka for events, consul for service discovery, vault for secrets.
+circuit breakers to test strategies
+pact for contract testing
+janus as api gateway
+mysql / sqlite for databases
+oauth and jwt for authentication
+xyz for authorization service(lDAP?)
+
+
+options
+run is all in docker vs run it all natively faster!
