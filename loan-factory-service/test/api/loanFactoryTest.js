@@ -25,8 +25,6 @@ describe('Loan Factory', () => {
           res.should.have.status(201);
           res.body.should.be.a('object');
           res.body.amount.should.be.eq(5000);
-          //res.body.status.should.be.eq('approved');
-          //res.body.interest_rate.should.be.eq(6);
           done();
         });
     });
