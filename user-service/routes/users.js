@@ -6,7 +6,11 @@ var db = require('../models/index');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  db.user.findAll().then(users => {
+  let where = {};
+  if (req.query.email) {
+    where = {where: {email: req.query.email}};
+  }
+  db.user.findAll(where).then(users => {
     res.send({users: users});
   });
 });
