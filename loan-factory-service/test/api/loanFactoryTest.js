@@ -15,10 +15,10 @@ describe('Loan Factory', () => {
   /*
   * Happy path for scores
   */
-  describe('POST /loan-factory', () => {
+  describe('POST /loans', () => {
     it('it should create and user when amount =< 10000', (done) => {
       chai.request(server)
-        .post('/loan-factory')
+        .post('/loans')
         .send({amount: 5000, maturity: 12, email: 'mike@example.com'})
         .end((err, res) => {
           console.log(res.body)

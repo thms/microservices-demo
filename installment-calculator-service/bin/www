@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('installment-calculator-service:server');
 var http = require('http');
-var consul = require('consul')();
+var consul = require('consul')({host: 'consul.service.consul'});
 const os = require('os');
 const process = require('process');
 
@@ -80,7 +80,7 @@ function onError(error) {
   }
 }
 
-/* get local ip address */
+/* get local ip address, also works inside docker container */
 const getLocalExternalIP = () => [].concat(...Object.values(os.networkInterfaces()))
   .filter(details => details.family === 'IPv4' && !details.internal)
   .pop().address

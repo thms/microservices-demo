@@ -8,7 +8,7 @@ const loanApplicationSchema = Joi.object({
   email: Joi.string().email().required()
 });
 
-/* POST /loan-factory */
+/* POST /loans */
 /*  calls user service to create  / get user
     scoring service to get aproval
     installment plan calculator to create plan
@@ -19,6 +19,7 @@ router.post('/', function(req, res, next) {
     allowUnknown: false,
     abortEarly: true
   }).then(validation => {
+    // get or create the
     res.status(201);
     res.json({amount: req.body.amount});
     res.end();
