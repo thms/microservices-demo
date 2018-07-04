@@ -1,3 +1,7 @@
 */node_modules
 contract-testing/logs
 contract-testing/pacts
+.DS_Store
+.nyc_output
+coverage
+consul-data

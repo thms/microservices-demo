@@ -9,13 +9,13 @@ var config    = require(__dirname + '/../config/database.json')[env];
 var db        = {};
 
 /* Get secrets from vault instead of config file */
-let options = {
-  apiVersion: 'v1', // default
-  endpoint: 'http://127.0.0.1:8200', // default
-  token: process.env.VAULT_TOKEN
-};
-process.env.DEBUG = 'node-vault'; // switch on debug mode
-var vault = require("node-vault")(options);
+// let options = {
+//   apiVersion: 'v1', // default
+//   endpoint: 'http://127.0.0.1:8200', // default
+//   token: process.env.VAULT_TOKEN
+// };
+// process.env.DEBUG = 'node-vault'; // switch on debug mode
+// var vault = require("node-vault")(options);
 // vault.read('secret/user-service/db').then( secrets => {
 //   console.log(secrets)
 //   config = {
@@ -32,25 +32,25 @@ var vault = require("node-vault")(options);
 //     console.log(error)
 //   })
 
-async function getSecretsFromVault(vault) {
-  try {
-    let secrets = await vault.read('secret/user-service/db');
-    console.log(secrets)
-    let config = {
-          "username": secrets.data.username,
-          "password": secrets.data.password,
-          "database": secrets.data.database,
-          "host": "127.0.0.1",
-          "dialect": "mysql"
-      };
-      return(config);
-    } catch (error) {
-      console.log(error)
-      throw(error)
-    }
-}
-let config2 = getSecretsFromVault(vault);
-console.log(config2);
+// async function getSecretsFromVault(vault) {
+//   try {
+//     let secrets = await vault.read('secret/user-service/db');
+//     console.log(secrets)
+//     let config = {
+//           "username": secrets.data.username,
+//           "password": secrets.data.password,
+//           "database": secrets.data.database,
+//           "host": "127.0.0.1",
+//           "dialect": "mysql"
+//       };
+//       return(config);
+//     } catch (error) {
+//       console.log(error)
+//       throw(error)
+//     }
+// }
+// let config2 = getSecretsFromVault(vault);
+// console.log(config2);
 // This does not yet work, the thing does not wait for the promise to resolve.
 /* End config from vault */
 

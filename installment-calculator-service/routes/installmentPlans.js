@@ -28,7 +28,7 @@ router.post('/', function(req, res, next) {
       req.body.amount, // amount
       req.body.maturity,   // installments number in months
       req.body.interest_rate,    // interest rate in percent
-      true  // diminishin ??
+      true  // diminishing ??
     );
     res.status(201);
     res.json(installmentPlan);

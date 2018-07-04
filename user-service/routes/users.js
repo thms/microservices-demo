@@ -22,4 +22,11 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+router.post('/', function(req, res, next) {
+  console.log(req.body)
+  db.user.create(req.body).then(user => {
+    res.json(user);
+    res.end()
+  })})
+
 module.exports = router;

@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www",
-    "test": "mocha -w test/**"
+    "consumer": "mocha consumerTest.js",
+    "provider": "mocha providerVerificationTest.js"
   },
   "config": {
     "pact_do_not_track": true

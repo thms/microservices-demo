@@ -1,4 +1,3 @@
-//const pact = require('@pact-foundation/pact-node');
 const { Pact, Verifier } = require('@pact-foundation/pact');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -7,12 +6,7 @@ const bodyParser = require('body-parser').json();
 chai.use(chaiHttp);
 
 
-// run with mocha test.js
-// does not persist the contracts in the directory yet
-// somehow the pact-node stuff is not understandable yet
-
-// open questions: how
-
+// run with mocha consumerTest.js
 describe('loan-factory', () =>{
   // pact server:
   const url = 'http://127.0.0.1';
@@ -70,7 +64,8 @@ describe('loan-factory', () =>{
       })
     })
 
-    // this is simplistic, should really test the function that embedded in the code I am testing
+    // this is simplistic, should really test the function that is embedded in the code I am testing
+    // should really test a use case where the loan factory is asked to create a loan, and has to make multiple calls to other services.
     it('returns the user' , done => {
       chai.request('http://127.0.0.1:9999')
         .get('/users?email=mike@example.com')

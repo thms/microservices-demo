@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 describe('user-service', () => {
   const options = {
     providerBaseUrl: 'http://127.0.0.1:3000',
+    providerStatesSetupUrl: 'http://127.0.0.1:3000/contract-testing/state',
     provider: 'user-service',
     pactUrls: ['/Users/thomasboltze/code/demo-system/contract-testing/pacts/loan-factory-service-user-service.json']
   }
