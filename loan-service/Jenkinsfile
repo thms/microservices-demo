@@ -14,7 +14,7 @@ pipeline {
         script{
           sh '''
             cd loan-service
-            ./node_modules/mocha/bin/mocha -w test/**
+            ./node_modules/mocha/bin/mocha test/**
             '''
         }
       }
