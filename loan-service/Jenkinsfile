@@ -3,13 +3,19 @@ pipeline {
   stages{
     stage('Setup') {
       steps{
-        sh 'cd loan-service && npm install'
+        sh '''
+          cd loan-service
+          npm install
+          '''
       }
     }
     stage('Test') {
       steps{
         script{
-          sh 'cd loan-service && ./node_modules/mocha/bin/mocha -w test/**'
+          sh '''
+            cd loan-service
+            ./node_modules/mocha/bin/mocha -w test/**
+            '''
         }
       }
     }
