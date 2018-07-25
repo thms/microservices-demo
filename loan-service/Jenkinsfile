@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-      label 'nodebuilder'
-  }
+  agent any
   stages{
     stage('Setup') {
       steps{
