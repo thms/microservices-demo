@@ -11,13 +11,20 @@ pipeline {
     }
     stage('Test') {
       steps{
-        script{
           sh '''
             cd loan-service
             ./node_modules/mocha/bin/mocha test/**
             '''
-        }
       }
     }
+    stage('Docker') {
+      steps{
+          sh '''
+          cd loan-service
+          docker build -f Dockerfile -t loan-service .
+          '''
+      }
+    }
+
   }
 }
