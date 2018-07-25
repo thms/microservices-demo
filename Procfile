@@ -9,3 +9,4 @@ user-service: sleep 2s; cd user-service && VAULT_TOKEN=e77cf56b-b696-f1d9-dda8-5
 # viban-service: sleep 2s; cd viban-service && npm run devstart
 installment-calculator-service: sleep 2s; cd installment-calculator-service && npm run devstart
 loan-factory-service: sleep 2s; cd loan-factory-service && npm run devstart
+scoring-service: sleep 2s; cd scoring-service && npm run devstart

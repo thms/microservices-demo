@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     created_at: {
        type: DataTypes.DATE(3),
-       defaultValue: sequelize.literal('CURRENT_TIMESTAMP(3)'),
      },
      updated_at: {
        type: DataTypes.DATE(3),
-       defaultValue: sequelize.literal('NULL'),
+       allowNull: true,
+       defaultValue: null
      },
   }, {
     underscored: true

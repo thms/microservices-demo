@@ -15,12 +15,13 @@ const installmentPlanParamsSchema = Joi.object({
 router.post('/', function(req, res, next) {
   const validation = Joi.validate(req.body, installmentPlanParamsSchema, {
   // return an error if body has an unrecognised property
-    allowUnknown: false,
+    allowUnknown: true,
     // return only first error a payload contains
     abortEarly: true
   });
 
   if (validation.error) {
+    console.log(validation.error)
     res.status(400);
     res.json(validation.error.details[0]);
   } else {

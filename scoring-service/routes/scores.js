@@ -4,7 +4,8 @@ const router = express.Router();
 
 const userSchema = Joi.object({
   email: Joi.string().email().required(),
-  id: Joi.number().integer().positive().required()
+  id: Joi.number().integer().positive().required(),
+  name: Joi.string().required()
 });
 
 const loanApplicationSchema = Joi.object({
@@ -17,7 +18,7 @@ const loanApplicationSchema = Joi.object({
 /* generates a new installment plan and returns it. does not store it */
 router.post('/', function(req, res, next) {
   const validation = Joi.validate(req.body, loanApplicationSchema, {
-    allowUnknown: false,
+    allowUnknown: true,
     abortEarly: true
   }).then(validation => {
     if (req.body.amount > 10000) {
@@ -28,7 +29,8 @@ router.post('/', function(req, res, next) {
       response = {
         status: 'approved',
         interest_rate: 6,
-        amount: 50000
+        amount: req.body.amount,
+        maturity: 12
       }
     }
     res.status(201);

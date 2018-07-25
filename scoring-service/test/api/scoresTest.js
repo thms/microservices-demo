@@ -19,12 +19,12 @@ describe('Scorings', () => {
     it('it should approve loan when amount =< 10000', (done) => {
       chai.request(server)
         .post('/scores')
-        .send({amount: 1000, user: {email: 'mike@example.com', id: 1}, loans: []})
+        .send({amount: 1000, user: {email: 'mike@example.com', id: 1, name: 'mike'}, loans: []})
         .end((err, res) => {
           console.log(res.body)
           res.should.have.status(201);
           res.body.should.be.a('object');
-          res.body.amount.should.be.eq(50000);
+          res.body.amount.should.be.eq(1000);
           res.body.status.should.be.eq('approved');
           res.body.interest_rate.should.be.eq(6);
           done();
@@ -34,7 +34,7 @@ describe('Scorings', () => {
     it('it should reject loan when amount > 10000', (done) => {
       chai.request(server)
         .post('/scores')
-        .send({amount: 10001, user: {email: 'mike@example.com', id: 1}, loans: []})
+        .send({amount: 10001, user: {email: 'mike@example.com', id: 1, name: 'mike'}, loans: []})
         .end((err, res) => {
           console.log(res.body)
           res.should.have.status(201);
@@ -64,7 +64,7 @@ describe('Scorings', () => {
     it('it should return clear error message when loans is missing', (done) => {
       chai.request(server)
         .post('/scores')
-        .send({amount: 1000, user: {email: 'mike@example.com', id: 1}})
+        .send({amount: 1000, user: {email: 'mike@example.com', id: 1, name: 'mike'}})
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
@@ -76,7 +76,7 @@ describe('Scorings', () => {
   it('it should return clear error message when amount validation fails', (done) => {
     chai.request(server)
       .post('/scores')
-      .send({amount: 100001, user: {email: 'mike@example.com', id: 1}, loans: []})
+      .send({amount: 100001, user: {email: 'mike@example.com', id: 1, name: 'mike'}, loans: []})
       .end((err, res) => {
         res.should.have.status(400);
         res.body.should.be.a('object');

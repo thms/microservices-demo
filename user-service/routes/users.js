@@ -24,7 +24,7 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   console.log(req.body)
-  db.user.create(req.body).then(user => {
+  db.user.create(req.body, {silent: true}).then(user => {
     res.json(user);
     res.end()
   })})

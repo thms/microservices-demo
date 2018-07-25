@@ -21,5 +21,10 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+router.post('/', function(req, res, next) {
+  res.status(201)
+  res.json(req.body)
+})
+
 
 module.exports = router;

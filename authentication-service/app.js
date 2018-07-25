@@ -12,10 +12,16 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+const Model = require('./model')
+let model = new(Model);
+console.log(model.dump())
+
 app.oauth = new OAuthServer({
-  model: require('./model')
+  debug: true,
+  model: model
 });
 
+//console.log(app.oauth.server.options.model.dump())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
