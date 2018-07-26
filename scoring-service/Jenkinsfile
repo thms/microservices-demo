@@ -1,6 +1,12 @@
 pipeline {
   agent any
   stages{
+    stage('Git') {
+     steps{
+         checkout scm
+         }
+     }
+
     stage('Setup') {
       steps{
         sh '''
@@ -21,8 +27,10 @@ pipeline {
       steps{
           sh '''
           cd scoring-service
-          docker build -f Dockerfile -t 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT .
-          docker push 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT
+          #docker build -f Dockerfile -t 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT .
+        #docker push 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT
+          docker build -f Dockerfile -t 10.94.1.14:5000/scoring-service:${GIT_COMMIT} .
+          docker push 10.94.1.14:5000/scoring-service:${GIT_COMMIT}
           '''
       }
     }
