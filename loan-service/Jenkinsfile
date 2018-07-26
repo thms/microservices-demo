@@ -21,7 +21,8 @@ pipeline {
       steps{
           sh '''
           cd loan-service
-          docker build -f Dockerfile -t loan-service .
+          docker build -f Dockerfile -t 10.94.1.14:5000/loan-service:${BUILD_NUMBER}-SNAPSHOT .
+          docker push 10.94.1.14:5000/loan-service:${BUILD_NUMBER}-SNAPSHOT
           '''
       }
     }

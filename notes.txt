@@ -25,3 +25,29 @@ xyz for authorization service(lDAP?)
 
 options
 run is all in docker vs run it all natively faster!
+
+Jenkins
+Note: When using launchctl the port will be 8080.
+
+To have launchd start jenkins-lts now and restart at login:
+  brew services start jenkins-lts
+Or, if you don't want/need a background service you can just run:
+  jenkins-lts
+  admin / aafe3ebe456e424e823b73abfbd2d5bc
+
+
+
+  docker registry
+  Instructions are cryptic, and the provided plist is missing "serve" as an argument...
+  Start the Docker registry:
+runs on port 5000
+docker push runs on the daemon, so the insecure registry needs to use the host's public IP address for docker push to work...
+
+http://localhost:5000/v2/loan-service/tags/list
+
+launchctl load ~/Library/LaunchAgents/com.docker.registry.plist
+Restart the docker registry service
+launchctl stop com.docker.registry
+launchctl start com.docker.registry
+Unload the docker registry service
+launchctl unload ~/Library/LaunchAgents/com.docker.registry.plist
