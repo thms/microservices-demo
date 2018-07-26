@@ -1,0 +1,31 @@
+pipeline {
+  agent any
+  stages{
+    stage('Setup') {
+      steps{
+        sh '''
+          cd scoring-service
+          npm install
+          '''
+      }
+    }
+    stage('Test') {
+      steps{
+          sh '''
+            cd scoring-service
+            ./node_modules/mocha/bin/mocha test/**
+            '''
+      }
+    }
+    stage('Docker') {
+      steps{
+          sh '''
+          cd scoring-service
+          docker build -f Dockerfile -t 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT .
+          docker push 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT
+          '''
+      }
+    }
+
+  }
+}
