@@ -44,6 +44,7 @@ pipeline {
           cd ${SERVICE}
           kubectl run ${SERVICE} --image=10.94.1.14:5000/${SERVICE}:${GIT_COMMIT} --port=80
           kubectl expose deployment ${SERVICE} --type=NodePort
+          '''
       }
     }
   }
