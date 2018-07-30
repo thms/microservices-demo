@@ -6,6 +6,7 @@ function InMemoryCache() {
   this.clients = [{ clientId : 'loan-service', clientSecret : 'loan-service-secret', redirectUris : [''] }];
   this.tokens = [];
   this.users = [{ id : '123', username: 'mike@example.com', password: 'password' }];
+  this.authorizationCodes = [];
 }
 
 /**

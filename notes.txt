@@ -51,3 +51,18 @@ launchctl stop com.docker.registry
 launchctl start com.docker.registry
 Unload the docker registry service
 launchctl unload ~/Library/LaunchAgents/com.docker.registry.plist
+
+
+local kubernets cluster via docker
+runs inside of the docker VM as a local one node cluster.
+http://blog.xebia.com/running-kubernetes-locally-docker-mac-os-x/
+
+Install cluster UI
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+secret "kubernetes-dashboard-certs" created
+serviceaccount "kubernetes-dashboard" created
+role.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
+rolebinding.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
+deployment.apps "kubernetes-dashboard" created
+service "kubernetes-dashboard" created
+Thomas-MacBook-Pro:scoring-service thomasboltze$ kubectl proxy

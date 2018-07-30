@@ -1,11 +1,12 @@
 {
   "name": "scoring-service",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "test": "mocha -w test/**"
+    "test": "mocha -w test/**",
+    "jest": "jest --testRegex=/test/.*/.*Test\\.js$"
   },
   "dependencies": {
     "consul": "^0.32.0",

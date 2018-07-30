@@ -1,5 +1,6 @@
 pipeline {
   agent any
+  SERVICE = 'scoring-service'
   stages{
     stage('Git') {
      steps{
@@ -10,7 +11,7 @@ pipeline {
     stage('Setup') {
       steps{
         sh '''
-          cd scoring-service
+          cd ${SERVICE}
           npm install
           '''
       }
@@ -18,7 +19,7 @@ pipeline {
     stage('Test') {
       steps{
           sh '''
-            cd scoring-service
+            cd ${SERVICE}
             ./node_modules/mocha/bin/mocha test/**
             '''
       }
@@ -26,14 +27,13 @@ pipeline {
     stage('Docker') {
       steps{
           sh '''
-          cd scoring-service
-          #docker build -f Dockerfile -t 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT .
-        #docker push 10.94.1.14:5000/scoring-service:${BUILD_NUMBER}-SNAPSHOT
-          docker build -f Dockerfile -t 10.94.1.14:5000/scoring-service:${GIT_COMMIT} .
-          docker push 10.94.1.14:5000/scoring-service:${GIT_COMMIT}
+          cd ${SERVICE}
+          #docker build -f Dockerfile -t 10.94.1.14:5000/${SERVICE}:${BUILD_NUMBER}-SNAPSHOT .
+          #docker push 10.94.1.14:5000/${SERVICE}:${BUILD_NUMBER}-SNAPSHOT
+          docker build -f Dockerfile -t 10.94.1.14:5000/${SERVICE}:${GIT_COMMIT} .
+          docker push 10.94.1.14:5000/${SERVICE}:${GIT_COMMIT}
           '''
       }
     }
-
   }
 }
