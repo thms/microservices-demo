@@ -1,6 +1,9 @@
 pipeline {
   agent any
-  SERVICE = 'scoring-service'
+  environment {
+    def SERVICE='scoring-service'
+  }
+
   stages{
     stage('Git') {
      steps{
