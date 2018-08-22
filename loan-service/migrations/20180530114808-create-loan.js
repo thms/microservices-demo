@@ -11,7 +11,7 @@ module.exports = {
       borrower_id: {
         type: Sequelize.INTEGER
       },
-      principal: {
+      amount: {
         type: Sequelize.INTEGER
       },
       maturity: {

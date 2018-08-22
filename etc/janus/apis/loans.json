@@ -1,0 +1,21 @@
+{
+    "name" : "loan-service",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/loans/*",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+              {"target": "http://loan-service:3000/loans"}
+            ]
+        },
+        "strip_path" : false,
+        "append_path" : false,
+        "methods" : ["GET"]
+    },
+    "health_check": {
+        "url": "http://loan-service:3000/",
+        "timeout": 3
+    }
+}

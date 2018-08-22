@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": null,
+    "password": "mysql-root-password",
     "database": "loan_service_development",
-    "host": "127.0.0.1",
+    "host": "db",
     "dialect": "mysql"
   },
   "test": {
@@ -15,7 +15,7 @@
   },
   "production": {
     "username": "root",
-    "password": null,
+    "password": "",
     "database": "loan_service_production",
     "host": "127.0.0.1",
     "dialect": "mysql"

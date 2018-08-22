@@ -39,7 +39,7 @@ Or, if you don't want/need a background service you can just run:
 
   docker registry
   Instructions are cryptic, and the provided plist is missing "serve" as an argument...
-  Start the Docker registry:
+Start the Docker registry:
 runs on port 5000
 docker push runs on the daemon, so the insecure registry needs to use the host's public IP address for docker push to work...
 
@@ -53,7 +53,7 @@ Unload the docker registry service
 launchctl unload ~/Library/LaunchAgents/com.docker.registry.plist
 
 
-local kubernets cluster via docker
+local kubernetes cluster via docker
 runs inside of the docker VM as a local one node cluster.
 http://blog.xebia.com/running-kubernetes-locally-docker-mac-os-x/
 
@@ -65,4 +65,21 @@ role.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
 rolebinding.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
 deployment.apps "kubernetes-dashboard" created
 service "kubernetes-dashboard" created
-Thomas-MacBook-Pro:scoring-service thomasboltze$ kubectl proxy
+# Run the dashboard
+kubectl proxy
+
+http://127.0.0.1:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/cluster?namespace=default
+
+
+docker-compose
+docker-compose up -d
+docker-compose down
+docker-compose build loan-service --no-cache
+https://medium.com/@pcarion/a-consul-a-vault-and-a-docker-walk-into-a-bar-d5a5bf897a87
+
+vault in docker:
+export VAULT_ADDR='http://127.0.0.1:8200'
+vault operator init -key-shares=1 -key-threshold=1
+Unseal Key 1: ZcBVNEgPSUr6hUlbZDly1FJAysnc+5z5jtqriLhJNTQ=
+Initial Root Token: 163f4ad0-0c83-78f3-576d-456cbb52fefd
+vault operator unseal ZcBVNEgPSUr6hUlbZDly1FJAysnc+5z5jtqriLhJNTQ=

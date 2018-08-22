@@ -63,7 +63,14 @@ const createLoan = async (data) => {
   let response = await axios.get('http://consul.service.consul:8500/v1/catalog/service/loan-service')
   let address = response.data[0].ServiceAddress;
   let port = response.data[0].ServicePort;
-  response = await axios.post(`http://loan-service.service.consul:${port}/loans`, data);
+  let loanData = {
+    borrower_id: data.user.id,
+    amount: data.approval.amount,
+    interest_rate: data.approval.interest_rate,
+    maturity: data.approval.maturity,
+    product_id: 1
+  }
+  response = await axios.post(`http://loan-service.service.consul:${port}/loans`, loanData);
   return response.data
 }
 

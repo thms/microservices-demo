@@ -1,0 +1,103 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "mysql-root-password"
+      MYSQL_DATABASE: "user_service_development"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+  consul:
+    container_name: consul.server
+    command: agent -server -bind 0.0.0.0 -client 0.0.0.0 -bootstrap-expect=1
+    image: consul:latest
+    volumes:
+      - ./etc/consul.server/config:/consul/config
+      - ./etc/consul.server/data:/consul/data
+    ports:
+      - "8300:8300"
+      - "8500:8500"
+      - "8600:8600/udp"
+  vault:
+    container_name: vault.server
+    image: vault
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./etc/vault.server/config:/mnt/vault/config
+      - ./etc/vault.server/data:/mnt/vault/data
+      - ./etc/vault.server/logs:/mnt/vault/logs
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_LOCAL_CONFIG={"dev_root_token_id":"7734c4e17278665e9085f3a3936b47e1465d035f","backend":{"consul":{"address":"${LOCAL_IP}:8500","advertise_addr":"http://${LOCAL_IP}", "path":"vault/"}},"listener":{"tcp":{"address":"0.0.0.0:8200","tls_disable":1}}}
+      - VAULT_ADDR=http://127.0.0.1:8200
+    command: server
+    depends_on:
+      - consul
+
+  vault-unseal:
+    container_name: vault-unseal
+    depends_on:
+      - vault
+    build: ./vault-unseal
+    environment:
+    - VAULT_ADDR=http://${LOCAL_IP}:8200
+    command: vault operator unseal ZcBVNEgPSUr6hUlbZDly1FJAysnc+5z5jtqriLhJNTQ=
+
+  loan-service:
+    depends_on:
+      - db
+      - consul
+    build: ./loan-service
+    expose:
+      - "3000"
+    restart: always
+
+  user-service:
+    depends_on:
+      - db
+      - consul
+    build: ./user-service
+    expose:
+      - "3000"
+    restart: always
+
+  loan-factory-service:
+    depends_on:
+      - consul
+    build: ./loan-factory-service
+    expose:
+      - "3000"
+    restart: always
+
+  installment-calculator-service:
+    depends_on:
+      - consul
+    build: ./installment-calculator-service
+    expose:
+      - "3000"
+    restart: always
+
+  scoring-service:
+    depends_on:
+      - consul
+    build: ./scoring-service
+    expose:
+      - "3000"
+    restart: always
+
+  janus:
+    image: quay.io/hellofresh/janus
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ./etc/janus/janus.toml:/etc/janus/janus.toml
+      - ./etc/janus/apis:/etc/janus/apis
+
+volumes:
+  mysql_data:

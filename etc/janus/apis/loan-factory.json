@@ -1,0 +1,21 @@
+{
+    "name" : "loan-factory",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/loans",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+                {"target": "http://loan-factory-service:3000/loans"}
+            ]
+        },
+        "strip_path" : false,
+        "append_path" : false,
+        "methods" : ["POST"]
+    },
+    "health_check": {
+        "url": "http://loan-factory-service:3000/",
+        "timeout": 3
+    }
+}

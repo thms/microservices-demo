@@ -1,0 +1,21 @@
+{
+    "name" : "installment-calculator-service",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/installment-plans",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+                {"target": "http://installment-calculator-service:3000/installment-plans"}
+            ]
+        },
+        "strip_path" : false,
+        "append_path" : false,
+        "methods" : ["POST"]
+    },
+    "health_check": {
+        "url": "http://installment-calculator-service:3000/",
+        "timeout": 3
+    }
+}

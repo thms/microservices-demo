@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('scoring-service:server');
 var http = require('http');
-var consul = require('consul')();
+var consul = require('consul')({host: 'consul.service.consul'});
 const os = require('os');
 const process = require('process');
 
@@ -97,20 +97,20 @@ function onListening() {
   debug('Listening on ' + bind);
 
   // register service instance with consul:
-  // consul.agent.service.register(
-  //   {
-  //     name: 'scoring-service',
-  //     id: 'scoring-service-' + process.pid,
-  //     tags: ['node', 'rest'],
-  //     address: getLocalExternalIP(),
-  //     port: addr.port,
-  //     check: {
-  //       http: 'http://' + getLocalExternalIP() + ':' + addr.port + '/',
-  //       interval: '5s'
-  //     }
-  //   },
-  //   err => {
-  //     if (err) throw(err);
-  //   }
-  // );
+  consul.agent.service.register(
+    {
+      name: 'scoring-service',
+      id: 'scoring-service-' + process.pid,
+      tags: ['node', 'rest'],
+      address: getLocalExternalIP(),
+      port: addr.port,
+      check: {
+        http: 'http://' + getLocalExternalIP() + ':' + addr.port + '/',
+        interval: '5s'
+      }
+    },
+    err => {
+      if (err) throw(err);
+    }
+  );
 }

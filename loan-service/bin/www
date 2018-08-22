@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('loan-service:server');
 var http = require('http');
-var consul = require('consul')();
+var consul = require('consul')({host: 'consul.service.consul'});
 const os = require('os');
 const process = require('process');
 
@@ -80,7 +80,7 @@ function onError(error) {
   }
 }
 
-/* get local ip address */
+/* get local ip address, this works if the service runs locally, but not in docker*/
 const getLocalExternalIP = () => [].concat(...Object.values(os.networkInterfaces()))
   .filter(details => details.family === 'IPv4' && !details.internal)
   .pop().address
@@ -97,6 +97,7 @@ function onListening() {
   debug('Listening on ' + bind);
 
   // register service instance with consul:
+  // settings work for running both consul and service locally on MacBook
   consul.agent.service.register(
     {
       name: 'loan-service',

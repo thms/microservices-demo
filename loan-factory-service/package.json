@@ -15,6 +15,7 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "joi": "^13.4.0",
+    "jsonwebtoken": "^8.3.0",
     "loanjs": "^1.0.2",
     "morgan": "~1.9.0",
     "nodemon": "^1.17.4"

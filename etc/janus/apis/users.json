@@ -1,0 +1,21 @@
+{
+    "name" : "user-service",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/users/*",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+              {"target": "http://user-service:3000/users"}
+            ]
+        },
+        "strip_path" : false,
+        "append_path" : false,
+        "methods" : ["GET"]
+    },
+    "health_check": {
+        "url": "http://user-service:3000/",
+        "timeout": 3
+    }
+}

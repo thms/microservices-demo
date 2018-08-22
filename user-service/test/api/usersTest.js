@@ -53,7 +53,7 @@ describe('Users', () => {
         });
     });
 
-    // it('it should respond wiht 404 if the user cannot be found', (done) => {
+    // it('it should respond with 404 if the user cannot be found', (done) => {
     //   chai.request(server)
     //     .get('/users?email=non.existing@example.com')
     //     .end((err, res) => {
