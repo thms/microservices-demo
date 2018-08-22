@@ -21,21 +21,22 @@ services:
       - "8300:8300"
       - "8500:8500"
       - "8600:8600/udp"
+
   vault:
     container_name: vault.server
     image: vault
     ports:
       - "8200:8200"
     volumes:
-      - ./etc/vault.server/config:/mnt/vault/config
-      - ./etc/vault.server/data:/mnt/vault/data
-      - ./etc/vault.server/logs:/mnt/vault/logs
+      - ./etc/vault.server/config:/vault/config
+      - ./etc/vault.server/data:/vault/data
+      - ./etc/vault.server/logs:/vault/logs
     cap_add:
       - IPC_LOCK
     environment:
-      - VAULT_LOCAL_CONFIG={"dev_root_token_id":"7734c4e17278665e9085f3a3936b47e1465d035f","backend":{"consul":{"address":"${LOCAL_IP}:8500","advertise_addr":"http://${LOCAL_IP}", "path":"vault/"}},"listener":{"tcp":{"address":"0.0.0.0:8200","tls_disable":1}}}
+      # - VAULT_LOCAL_CONFIG={"dev_root_token_id":"7734c4e17278665e9085f3a3936b47e1465d035f","backend":{"consul":{"address":"${LOCAL_IP}:8500","advertise_addr":"http://${LOCAL_IP}", "path":"vault/"}},"listener":{"tcp":{"address":"0.0.0.0:8200","tls_disable":1}}}
       - VAULT_ADDR=http://127.0.0.1:8200
-    command: server
+    entrypoint: vault server -config=/vault/config/config.json
     depends_on:
       - consul
 
@@ -46,12 +47,13 @@ services:
     build: ./vault-unseal
     environment:
     - VAULT_ADDR=http://${LOCAL_IP}:8200
-    command: vault operator unseal ZcBVNEgPSUr6hUlbZDly1FJAysnc+5z5jtqriLhJNTQ=
+    command: vault operator unseal u9GyhUugy5z+6z/u065z++hsbUvngFDJ5TXCZtLAt60=
 
   loan-service:
     depends_on:
       - db
       - consul
+      - vault
     build: ./loan-service
     expose:
       - "3000"
@@ -61,6 +63,7 @@ services:
     depends_on:
       - db
       - consul
+      - vault
     build: ./user-service
     expose:
       - "3000"
@@ -69,6 +72,7 @@ services:
   loan-factory-service:
     depends_on:
       - consul
+      - vault
     build: ./loan-factory-service
     expose:
       - "3000"
@@ -77,6 +81,7 @@ services:
   installment-calculator-service:
     depends_on:
       - consul
+      - vault
     build: ./installment-calculator-service
     expose:
       - "3000"
@@ -85,6 +90,7 @@ services:
   scoring-service:
     depends_on:
       - consul
+      - vault
     build: ./scoring-service
     expose:
       - "3000"
