@@ -3,14 +3,14 @@
     "active" : true,
     "proxy" : {
         "preserve_host" : false,
-        "listen_path" : "/users/*",
+        "listen_path" : "/user-service/*",
         "upstreams" : {
             "balancing": "roundrobin",
             "targets": [
-              {"target": "http://user-service:3000/users"}
+              {"target": "http://user-service:3000/"}
             ]
         },
-        "strip_path" : false,
+        "strip_path" : true,
         "append_path" : false,
         "methods" : ["GET"]
     },

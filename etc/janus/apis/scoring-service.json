@@ -3,14 +3,14 @@
     "active" : true,
     "proxy" : {
         "preserve_host" : false,
-        "listen_path" : "/installment-plans",
+        "listen_path" : "/scoring-service/*",
         "upstreams" : {
             "balancing": "roundrobin",
             "targets": [
-                {"target": "http://installment-calculator-service:3000/installment-plans"}
+                {"target": "http://installment-calculator-service:3000/"}
             ]
         },
-        "strip_path" : false,
+        "strip_path" : true,
         "append_path" : false,
         "methods" : ["POST"]
     },

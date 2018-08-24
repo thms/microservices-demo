@@ -32,7 +32,9 @@ router.get('/datastores', function(req, res, next) {
         name: 'loan_service_development',
         type: 'mysql',
         owner: 'loan-service',
-        schema: schema2
+        schemas: {
+          Loan: schema1
+        }
       }
     ]
   });

@@ -5,3 +5,5 @@ contract-testing/pacts
 .nyc_output
 coverage
 consul-data
+etc/consul.server/data
+etc/mysql.server
