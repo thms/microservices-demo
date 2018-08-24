@@ -1,0 +1,21 @@
+{
+    "name" : "zipkin",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/zipkin/*",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+                {"target": "http://zipkin:9411/zipkin/"}
+            ]
+        },
+        "strip_path" : true,
+        "append_path" : false,
+        "methods" : ["GET", "POST"]
+    },
+    "health_check": {
+        "url": "http://zipkin:9411/zipkin/",
+        "timeout": 3
+    }
+}

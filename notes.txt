@@ -34,6 +34,7 @@ To have launchd start jenkins-lts now and restart at login:
 Or, if you don't want/need a background service you can just run:
   jenkins-lts
   admin / aafe3ebe456e424e823b73abfbd2d5bc
+  admin / admin
 
 
 
