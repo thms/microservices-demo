@@ -70,6 +70,17 @@ services:
       - "3000"
     restart: always
 
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    environment:
+      - STORAGE_TYPE=mysql
+      - MYSQL_HOST=mysql
+    expose:
+      - "9411"
+    depends_on:
+      - db
+
   loan-factory-service:
     depends_on:
       - consul

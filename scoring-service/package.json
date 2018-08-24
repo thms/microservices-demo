@@ -9,6 +9,7 @@
     "jest": "jest --testRegex=/test/.*/.*Test\\.js$"
   },
   "dependencies": {
+    "appmetrics-zipkin": "^1.1.1",
     "consul": "^0.32.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",

@@ -84,3 +84,7 @@ Unseal Key 1: u9GyhUugy5z+6z/u065z++hsbUvngFDJ5TXCZtLAt60=
 
 Initial Root Token: ed1a8aca-bbfe-4c49-0167-36f0e21b6970
 vault operator unseal u9GyhUugy5z+6z/u065z++hsbUvngFDJ5TXCZtLAt60=
+
+
+UI to visualize Docker: weavescope
+scope launch
