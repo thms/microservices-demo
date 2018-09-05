@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "mysql-root-password",
+    "database": "authentication_service_development",
+    "host": "db",
+    "dialect": "mysql"
+  },
+  "test": {
+   "username": "root",
+   "password": null,
+   "database": "authentication_service_test",
+   "host": "127.0.0.1",
+   "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "",
+    "database": "authentication_service_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

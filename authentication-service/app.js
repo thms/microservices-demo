@@ -4,31 +4,27 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var OAuthServer = require('express-oauth-server');
+var db = require('./models/index');
 
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var statusRouter = require('./routes/status');
+var servicesRouter = require('./routes/services');
+var keysRouter = require('./routes/keys');
+var tokensRouter = require('./routes/tokens');
 
 var app = express();
 
-const Model = require('./model')
-let model = new(Model);
-console.log(model.dump())
 
-app.oauth = new OAuthServer({
-  debug: true,
-  model: model
-});
-
-//console.log(app.oauth.server.options.model.dump())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(app.oauth.authorize());
+
+app.use('/services', servicesRouter);
+app.use('/keys', keysRouter);
+app.use('/tokens', tokensRouter);
+app.use('/', statusRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
