@@ -50,6 +50,15 @@ services:
     - VAULT_ADDR=http://${LOCAL_IP}:8200
     command: vault operator unseal u9GyhUugy5z+6z/u065z++hsbUvngFDJ5TXCZtLAt60=
 
+  authentication-service:
+    depends_on:
+      - db
+      - consul
+    build: ./authentication-service
+    expose:
+      - "3000"
+    restart: always
+
   loan-service:
     depends_on:
       - db

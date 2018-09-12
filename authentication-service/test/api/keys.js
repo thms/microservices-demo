@@ -21,7 +21,6 @@ describe('Keys', () => {
       .get('/keys/public')
       .end((err, res) => {
         res.should.have.status(200);
-        console.log(res.body.public_key)
         res.body.public_key.should.be.a('string');
         done();
       });
