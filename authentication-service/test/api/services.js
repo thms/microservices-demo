@@ -35,7 +35,7 @@ describe('Services', () => {
     it('it should create a service', (done) => {
       chai.request(server)
         .post('/services')
-        .send({name: 'service-name', secret: 'service-secret', roles: ['service']})
+        .send({name: 'service-name', secret: 'service-secret', roles: ['service'], scopes: ['loan:read']})
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.be.a('object');

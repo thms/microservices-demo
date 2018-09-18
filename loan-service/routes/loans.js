@@ -22,7 +22,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST /loans */
-/* borrower_id, aount, product_id, maturity, interest_rate */
+/* borrower_id, amount, product_id, maturity, interest_rate */
 router.post('/', function(req, res, next) {
   db.loan.create(req.body, {silent: true}).then(loan => {
     res.status(201);

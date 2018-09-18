@@ -1,3 +1,25 @@
+DOING
+Authentication service
+- auth-service:API keys: DONE
+- auth-service:API oauth tokens --> jwt : DONE
+- loan-factory: get token on startup DONE
+- loan-factory: add token to header DOING
+- loan-service: get public key
+- loan service: require jwt with appropriate scope
+- other services: same as loan service
+
+TODO
+
+
+- end-to-end tests across all services
+- permissions api
+- service template / thingy that implements all the required goodies once for all services.
+- flip all services to run on port 80, so we can get rid of consul service discovery and port stuff.
+
+DONE
+- make zipkin dependent on environment variable
+
+
 brew services start mysql
 
 docker pull landoop/kafka-lenses-dev

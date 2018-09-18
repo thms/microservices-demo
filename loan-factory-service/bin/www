@@ -7,9 +7,14 @@
 var app = require('../app');
 var debug = require('debug')('loan-factory-service:server');
 var http = require('http');
-var consul = require('consul')({host: 'consul.service.consul'});
+//var consul = require('consul')({host: 'consul.service.consul'});
+var consul = require('consul')({host: 'consul'});
 const os = require('os');
 const process = require('process');
+const axios = require('axios');
+
+/* Storage for the access token for all requests throughout the server lifecycle. */
+let accessToken = '';
 
 /**
  * Get port from environment and store in Express.
@@ -85,6 +90,37 @@ const getLocalExternalIP = () => [].concat(...Object.values(os.networkInterfaces
   .filter(details => details.family === 'IPv4' && !details.internal)
   .pop().address
 
+
+/* register service with consul */
+const registerService = (serviceName, externalAddress, port, pid) => {
+  consul.agent.service.register(
+    {
+      name: serviceName,
+      id: serviceName + '-' + pid,
+      tags: ['node', 'rest'],
+      address: externalAddress,
+      port: port,
+      check: {
+        http: 'http://' + externalAddress + ':' + port + '/',
+        interval: '5s'
+      }
+    },
+    err => {
+      if (err) throw(err);
+    }
+  );
+}
+
+/* get the access token from the authentication service */
+const getAccessToken = (serviceName, clientSecret) => {
+  axios.post('http://authentication-service:3000/tokens', {
+    grant_type: 'client_credentials',
+    client_id: serviceName,
+    client_secret: clientSecret
+  })
+  .then(response => response.access_token)
+  .catch(err => console.log(err))
+}
 /**
  * Event listener for HTTP server "listening" event.
  */
@@ -98,20 +134,6 @@ function onListening() {
 
   // register service instance with consul:
   let ipAddr = getLocalExternalIP();
-  consul.agent.service.register(
-    {
-      name: 'loan-factory-service',
-      id: 'loan-factory-service-' + process.pid,
-      tags: ['node', 'rest'],
-      address: ipAddr,
-      port: addr.port,
-      check: {
-        http: 'http://' + ipAddr + ':' + addr.port + '/',
-        interval: '5s'
-      }
-    },
-    err => {
-      if (err) throw(err);
-    }
-  );
+  registerService('loan-factory-service', ipAddr, addr.port, process.pid);
+  accessToken = getAccessToken('loan-factory-service', 'loan-factory-secret');
 }

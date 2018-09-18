@@ -1,0 +1,7 @@
+stage('Deploy to Integration') {
+  steps{
+    VERSION=$(node -p -e "require('./package.json').version")
+  }
+}
+
+51b7072132ec63bae98130680c805094b7da37e4

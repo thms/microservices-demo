@@ -8,7 +8,8 @@ const serviceSchema =  Joi.object().keys({
   name: Joi.string().required(),
   secret: Joi.string().required(),
   token: Joi.string(),
-  roles: Joi.array().required()
+  roles: Joi.array().required(),
+  scopes: Joi.array().required()
 })
 /* GET service listing. */
 router.get('/', function(req, res, next) {
@@ -18,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST /services */
-/* name, secret, roles */
+/* name, secret, roles, scopes */
 router.post('/', function(req, res, next) {
   if (Joi.validate(req.body, serviceSchema).error === null) {
     db.service.create(req.body, {silent: true}).then(service => {
@@ -27,7 +28,7 @@ router.post('/', function(req, res, next) {
     })
   } else {
     res.status(400)
-    res.send({error: 'something went microsoft'})
+    res.send({error: 'something went wrong'})
   }
 })
 

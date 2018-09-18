@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     roles: {
       type: DataTypes.JSON
     },
+    scopes: {
+      type: DataTypes.JSON
+    },
     created_at: {
        type: DataTypes.DATE(3),
        defaultValue: sequelize.literal('CURRENT_TIMESTAMP(3)'),

@@ -33,7 +33,8 @@ router.post('/', function(req, res, next) {
     .then(service => {
       var key = fs.readFileSync('./config/id_rsa.pem');
       var token = jwt.sign({
-        roles: service.roles
+        roles: service.roles,
+        permissions: service.scopes
       },
         key,
       {
