@@ -16,6 +16,9 @@ const axios = require('axios');
 /* Storage for the access token for all requests throughout the server lifecycle. */
 global.accessToken = '';
 
+/* Storage for publc key for verifying jwt's */
+global.jwtPublicKey = null;
+
 /**
  * Get port from environment and store in Express.
  */

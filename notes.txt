@@ -3,8 +3,8 @@ Authentication service
 - auth-service:API keys: DONE
 - auth-service:API oauth tokens --> jwt : DONE
 - loan-factory: get token on startup DONE
-- loan-factory: add token to header DOING
-- loan-service: get public key
+- loan-factory: add token to header DONE
+- loan-service: get public key: DOING
 - loan service: require jwt with appropriate scope
 - other services: same as loan service
 
