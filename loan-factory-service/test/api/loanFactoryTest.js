@@ -146,7 +146,11 @@ let installmentPlanCalculatorPost = nock('http://installment-calculator-service:
 let loanServicePost = nock('http://loan-service:3000')
   .post('/loans')
   .reply(201, {
-    amount: 5000
+    amount: 5000,
+    interest_rate: 4,
+    maturity: 12,
+    created_at: new Date(),
+    updated_at: null
   })
 
 

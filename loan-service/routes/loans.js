@@ -23,11 +23,17 @@ router.get('/:id', function(req, res, next) {
 
 /* POST /loans */
 /* borrower_id, amount, product_id, maturity, interest_rate */
+/* TODO: figure out why I need to reload the loan to get the timestamps' values to be correct */
+/* without they are the { created_at: { val: 'CURRENT_TIMESTAMP(3)' },
+  updated_at: { val: 'NULL' },
+*/
 router.post('/', function(req, res, next) {
-  db.loan.create(req.body, {silent: true}).then(loan => {
-    res.status(201);
-    res.json(loan);
-    res.end();
+  db.loan.create(req.body, {silent: false}).then(loan => {
+    db.loan.findById(loan.id).then(loan => {
+      res.status(201);
+      res.json(loan);
+      res.end();
+    })
   })
 })
 
