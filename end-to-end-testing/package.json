@@ -1,0 +1,16 @@
+{
+  "name": "end-to-end-testing",
+  "version": "1.0.0",
+  "description": "End to end testing for demo system, focuses on the UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/api/**"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}

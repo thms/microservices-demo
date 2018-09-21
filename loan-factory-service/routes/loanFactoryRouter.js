@@ -41,9 +41,6 @@ router.post('/', function(req, res, next) {
     })
     .then(installmentPlan => {
       data.installmentPlan = installmentPlan
-      res.status(201)
-      res.json(data)
-      res.end()
       return createLoan(data)
     })
     .then(data => {
@@ -138,7 +135,7 @@ const getServiceAddressAndPort = async (serviceName) => {
     return { address: address, port: port };
 
   } else {
-    return { address: serviceName, port: 80 };
+    return { address: serviceName, port: 3000 };
   }
 }
 

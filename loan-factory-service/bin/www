@@ -14,7 +14,7 @@ const process = require('process');
 const axios = require('axios');
 
 /* Storage for the access token for all requests throughout the server lifecycle. */
-let accessToken = '';
+global.accessToken = '';
 
 /**
  * Get port from environment and store in Express.
@@ -118,7 +118,7 @@ const getAccessToken = (serviceName, clientSecret) => {
     client_id: serviceName,
     client_secret: clientSecret
   })
-  .then(response => response.access_token)
+  .then(response => response.data.access_token)
   .catch(err => console.log(err))
 }
 /**

@@ -71,6 +71,8 @@ services:
     restart: always
     environment:
       ZIPKIN: "zipkin"
+    labels:
+      - "logio=yes"
 
   loan-service:
     container_name: loan-service
@@ -84,6 +86,8 @@ services:
     restart: always
     environment:
       ZIPKIN: "zipkin"
+    labels:
+      - "logio=yes"
 
   user-service:
     container_name: user-service
@@ -97,6 +101,8 @@ services:
     restart: always
     environment:
       ZIPKIN: "zipkin"
+    labels:
+      - "logio=yes"
 
   zipkin:
     container_name: zipkin
@@ -120,6 +126,8 @@ services:
     restart: always
     environment:
       ZIPKIN: "zipkin"
+    labels:
+      - "logio=yes"
 
   installment-calculator-service:
     container_name: installment-calculator-service
@@ -132,6 +140,8 @@ services:
     restart: always
     environment:
       ZIPKIN: "zipkin"
+    labels:
+      - "logio=yes"
 
   scoring-service:
     container_name: scoring-service
@@ -144,6 +154,8 @@ services:
     restart: always
     environment:
       ZIPKIN: "zipkin"
+    labels:
+      - "logio=yes"
 
   janus:
     container_name: janus
@@ -154,6 +166,53 @@ services:
     volumes:
       - ./etc/janus/janus.toml:/etc/janus/janus.toml
       - ./etc/janus/apis:/etc/janus/apis
+
+  end-to-end-testing:
+    container_name: test
+    depends_on:
+      - loan-factory-service
+    build: ./end-to-end-testing
+    restart: always
+
+  logioweb:
+    image: 'quay.io/blacklabelops/logio:latest'
+    # container_name: logio
+    environment:
+      - 'LOGIO_ADMIN_USER='
+      - 'LOGIO_ADMIN_PASSWORD='
+      - LOGIO_CERTIFICATE_DNAME=
+    ports:
+      - '28778:28778'
+    volumes:
+      - '/opt/server'
+
+  harvester:
+    image: 'quay.io/blacklabelops/logio:latest'
+    environment:
+      - 'DELAYED_START=10'
+      - 'LOGIO_HARVESTER_NODENAME=DockerLogs'
+      - 'LOGIO_HARVESTER_STREAMNAME=UnifiedLogs'
+      - 'LOGIO_HARVESTER_LOGFILES='
+      - 'LOGS_DIRECTORIES=/var/lib/docker'
+      - 'LOG_FILE_PATTERN=*.log'
+    volumes:
+      - '/var/lib/docker:/var/lib/docker'
+    links:
+      - logioweb:logio
+    user: root
+    command: harvester
+
+  logio:
+    image: geniousphp/logio
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    ports:
+      - "28778:28778"
+    privileged: true
+    environment: #All these env variables are optionals
+      - PORT=28778
+      - DOCKER_SOCKET=/tmp/docker.sock
+      - SHOW_LOG_BY_LABEL=logio
 
 volumes:
   mysql_data:
