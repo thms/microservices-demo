@@ -7,8 +7,8 @@ services:
       MYSQL_ROOT_PASSWORD: "mysql-root-password"
       MYSQL_DATABASE: "user_service_development"
     volumes:
-      - mysql_data:/var/lib/mysql
-      #- ./etc/mysql.server/mysql:/var/lib/mysql
+      # - mysql_data:/var/lib/mysql
+      - ./etc/mysql.server:/var/lib/mysql
     restart: always
 
   registrator:
@@ -214,5 +214,5 @@ services:
       - DOCKER_SOCKET=/tmp/docker.sock
       - SHOW_LOG_BY_LABEL=logio
 
-volumes:
-  mysql_data:
+# volumes:
+#   mysql_data:
