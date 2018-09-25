@@ -8,16 +8,17 @@
   },
   "test": {
    "username": "root",
-   "password": null,
+   "password": "mysql-root-password",
    "database": "authentication_service_test",
    "host": "127.0.0.1",
-   "dialect": "mysql"
+   "dialect": "mysql",
+   "protocol": "tcp"
   },
   "production": {
     "username": "root",
     "password": "",
     "database": "authentication_service_production",
-    "host": "127.0.0.1",
+    "host": "db",
     "dialect": "mysql"
   }
 }

@@ -3,11 +3,17 @@
 /**
  * Module dependencies.
  */
+ var appzip = require('appmetrics-zipkin')({
+   host: 'zipkin',
+   port: 9411,
+   serviceName:'installment-calculator-service',
+   sampleRate: 1.0
+ });
 
 var app = require('../app');
 var debug = require('debug')('installment-calculator-service:server');
 var http = require('http');
-var consul = require('consul')({host: 'consul.service.consul'});
+var consul = require('consul')({host: 'consul'});
 const os = require('os');
 const process = require('process');
 

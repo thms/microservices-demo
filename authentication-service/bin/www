@@ -3,6 +3,15 @@
 /**
  * Module dependencies.
  */
+ const process = require('process');
+ if (process.env.ZIPKIN === 'zipkin') {
+   var appzip = require('appmetrics-zipkin')({
+     host: 'zipkin',
+     port: 9411,
+     serviceName:'authentication-service',
+     sampleRate: 1.0
+   });
+ }
 
 var app = require('../app');
 var debug = require('debug')('authentication-service:server');

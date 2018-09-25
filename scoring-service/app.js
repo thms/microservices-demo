@@ -1,9 +1,3 @@
-var appzip = require('appmetrics-zipkin')({
-  host: 'zipkin',
-  port: 9411,
-  serviceName:'scoring-service',
-  sampleRate: 1.0
-});
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
