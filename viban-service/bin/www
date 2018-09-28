@@ -103,20 +103,20 @@ function onListening() {
   debug('Listening on ' + bind);
 
   // register service instance with consul:
-  consul.agent.service.register(
-    {
-      name: 'viban-service',
-      id: 'viban-service-' + process.pid,
-      tags: ['node', 'rest'],
-      address: getLocalExternalIP(),
-      port: addr.port,
-      check: {
-        http: 'http://' + getLocalExternalIP() + ':' + addr.port + '/',
-        interval: '5s'
-      }
-    },
-    err => {
-      if (err) throw(err);
-    }
-  );
+  // consul.agent.service.register(
+  //   {
+  //     name: 'viban-service',
+  //     id: 'viban-service-' + process.pid,
+  //     tags: ['node', 'rest'],
+  //     address: getLocalExternalIP(),
+  //     port: addr.port,
+  //     check: {
+  //       http: 'http://' + getLocalExternalIP() + ':' + addr.port + '/',
+  //       interval: '5s'
+  //     }
+  //   },
+  //   err => {
+  //     if (err) throw(err);
+  //   }
+  // );
 }

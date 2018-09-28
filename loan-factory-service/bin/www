@@ -141,7 +141,7 @@ function onListening() {
   debug('Listening on ' + bind);
 
   // register service instance with consul:
-  let ipAddr = getLocalExternalIP();
-  registerService('loan-factory-service', ipAddr, addr.port, process.pid);
+  // let ipAddr = getLocalExternalIP();
+  // registerService('loan-factory-service', ipAddr, addr.port, process.pid);
   accessToken = getAccessToken('loan-factory-service', 'loan-factory-secret');
 }

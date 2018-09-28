@@ -147,8 +147,8 @@ function onListening() {
 
   // register service instance with consul:
   // settings work for running both consul and service locally on MacBook
-  let ipAddr = getLocalExternalIP();
-  registerService('loan-service', ipAddr, addr.port, process.pid);
+  // let ipAddr = getLocalExternalIP();
+  // registerService('loan-service', ipAddr, addr.port, process.pid);
   accessToken = getAccessToken('loan-service', 'loan-secret');
   jwtPublicKey = getPublicJwtKey();
 }
