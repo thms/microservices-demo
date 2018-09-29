@@ -4,20 +4,25 @@ Authentication service
 - auth-service:API oauth tokens --> jwt : DONE
 - loan-factory: get token on startup DONE
 - loan-factory: add token to header DONE
-- loan-service: get public key: DOING
-- loan service: require jwt with appropriate scope
+- loan-service: get public key: DONE
+- loan service: require jwt with appropriate scope - DOING
 - other services: same as loan service
 
 TODO
-
+- use envoy to build service mesh
 
 - end-to-end tests across all services
 - permissions api
 - service template / thingy that implements all the required goodies once for all services.
 - flip all services to run on port 80, so we can get rid of consul service discovery and port stuff.
+- deploy to kubernetes locally
 
 DONE
-- make zipkin dependent on environment variable
+- make zipkin dependent on environment variable, changed.
+
+
+
+
 
 
 brew services start mysql

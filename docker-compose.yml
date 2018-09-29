@@ -10,8 +10,8 @@ services:
       - ./etc/mysql.server:/var/lib/mysql
     restart: always
     command: --default-authentication-plugin=mysql_native_password
-    expose:
-      - "3306"
+    ports:
+      - "3306:3306"
 
   registrator:
     image: gliderlabs/registrator:latest

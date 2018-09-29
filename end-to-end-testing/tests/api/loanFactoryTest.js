@@ -9,11 +9,11 @@ describe('Loan Factory', () => {
   /*
   * Happy path for scores
   */
-  describe('POST /loans', () => {
+  describe('POST /loan-factory', () => {
     it('it should create loan and user when amount =< 10000', (done) => {
       //chai.request('http://loan-factory-service:3000')
       chai.request('http://localhost:8080')
-        .post('/loan-factory')
+        .post('/loan-factory/loans')
         .send({amount: 5000, maturity: 12, email: 'mike@example.com'})
         .end((err, res) => {
           console.log(res.body)

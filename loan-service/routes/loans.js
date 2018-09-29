@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
+const guard = require('express-jwt-permissions')()
 
 var db = require('../models/index');
 
 /* GET loans listing, optionally filtered by borrower_id. */
-router.get('/', function(req, res, next) {
+router.get('/', guard.check('loan:read'), function(req, res, next) {
   let where = {};
   if (req.query.borrower_id) {
     where = {where: {borrower_id: req.query.borrower_id}};
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET loans/:id */
-router.get('/:id', function(req, res, next) {
+router.get('/:id', guard.check('loan:read'), function(req, res, next) {
   db.loan.findById(req.params.id).then(loan => {
     res.send(loan);
   });
@@ -27,7 +28,7 @@ router.get('/:id', function(req, res, next) {
 /* without they are the { created_at: { val: 'CURRENT_TIMESTAMP(3)' },
   updated_at: { val: 'NULL' },
 */
-router.post('/', function(req, res, next) {
+router.post('/', guard.check('loan:write'), function(req, res, next) {
   db.loan.create(req.body, {silent: false}).then(loan => {
     db.loan.findById(loan.id).then(loan => {
       res.status(201);

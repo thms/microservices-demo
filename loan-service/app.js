@@ -3,12 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const jsonwebtoken = require('jsonwebtoken');
+const jwt = require('express-jwt');
 
 var loansRouter = require('./routes/loans');
 var statusRouter = require('./routes/status');
 var infoRouter = require('./routes/info');
 
 var app = express();
+
+// parse and validate tokens
+app.use(jwt({
+  secret: jwtPublicKey,
+  credentialsRequired: false
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
