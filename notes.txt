@@ -26,6 +26,7 @@ DONE
 
 
 brew services start mysql
+brew services stop mysql
 
 docker pull landoop/kafka-lenses-dev
 docker run -p 3030:3030 --rm --net=host \

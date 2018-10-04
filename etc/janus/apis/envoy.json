@@ -1,0 +1,21 @@
+{
+    "name" : "envoy",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/envoy/*",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+                {"target": "http://envoy:9901/"}
+            ]
+        },
+        "strip_path" : true,
+        "append_path" : false,
+        "methods" : ["GET", "POST"]
+    },
+    "health_check": {
+        "url": "http://envoy:9901/",
+        "timeout": 3
+    }
+}

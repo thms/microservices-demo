@@ -13,6 +13,20 @@ services:
     ports:
       - "3306:3306"
 
+  envoy:
+    image: envoyproxy/envoy
+    container_name: envoy
+    volumes:
+      - ./etc/envoy/front-proxy.yaml:/etc/envoy/front-proxy.yaml
+    entrypoint: /usr/local/bin/envoy
+    command: --v2-config-only -c /etc/envoy/front-proxy.yaml --service-cluster front-proxy -l debug
+    expose:
+      - "80"
+      - "8001"
+    ports:
+      - "80:80"
+      - "8001:8001"
+
   registrator:
     image: gliderlabs/registrator:latest
     container_name: registrator
@@ -198,17 +212,17 @@ services:
   #   user: root
   #   command: harvester
   #
-  # logio:
-  #   image: geniousphp/logio
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock
-  #   ports:
-  #     - "28778:28778"
-  #   privileged: true
-  #   environment: #All these env variables are optionals
-  #     - PORT=28778
-  #     - DOCKER_SOCKET=/tmp/docker.sock
-  #     - SHOW_LOG_BY_LABEL=logio
+  logio:
+    image: geniousphp/logio
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    ports:
+      - "28778:28778"
+    privileged: true
+    environment: #All these env variables are optionals
+      - PORT=28778
+      - DOCKER_SOCKET=/tmp/docker.sock
+      - SHOW_LOG_BY_LABEL=logio
 
   ## hystrix cannot connect to the streaming from Janus: Janus says streaming is not supported - but by what?
   # hystrix:
