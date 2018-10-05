@@ -27,6 +27,11 @@ static_resources:
                 route:
                   cluster: user-service
                   prefix_rewrite: "/"
+              - match:
+                  prefix: "/loan-factory/"
+                route:
+                  cluster: loan-factory-service
+                  prefix_rewrite: "/"
           http_filters:
           - name: envoy.router
             config: {}
@@ -46,6 +51,14 @@ static_resources:
     hosts:
     - socket_address:
         address: user-service
+        port_value: 80
+  - name: loan-factory-service
+    connect_timeout: 0.25s
+    type: logical_dns
+    lb_policy: round_robin
+    hosts:
+    - socket_address:
+        address: loan-factory-service
         port_value: 3000
 admin:
   access_log_path: "/dev/null"

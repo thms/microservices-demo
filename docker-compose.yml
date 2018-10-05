@@ -111,8 +111,14 @@ services:
       - consul
       - vault
     build: ./user-service
+    volumes:
+      - ./etc/envoy/service-envoy.yaml:/etc/envoy/service-envoy.yaml
+      - ./etc/envoy/start_service.sh:/usr/local/bin/start_service.sh
+    environment:
+      - SERVICE_NAME=user-service
     expose:
       - "3000"
+      - "80"
     restart: always
     labels:
       - "logio=yes"

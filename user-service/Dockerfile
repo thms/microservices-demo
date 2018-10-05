@@ -1,12 +1,17 @@
 FROM mhart/alpine-node
 
-WORKDIR /src
+RUN apk --no-cache add ca-certificates wget
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
+RUN apk add glibc-2.28-r0.apk
 
+RUN mkdir -p /etc/envoy
+ADD ./envoy /usr/local/bin/envoy
+
+WORKDIR /src
 COPY package.json .
 RUN npm i
-
 COPY . .
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+EXPOSE 80
+ENTRYPOINT ["/usr/local/bin/start_service.sh"]
