@@ -6,18 +6,20 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
 
-import reducer from './reducer';
+import { reducer, getAccessToken } from './reducer';
 import UserList from './UserList';
 import User from './User';
 import LoanList from './LoanList';
 import Loan from './Loan';
 
 const client = axios.create({
-  baseURL: 'http://10.93.2.26:8080/',
+  baseURL: 'http://10.94.1.31:8080/',
   responseType: 'json'
 });
 
 const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
+
+store.dispatch(getAccessToken());
 
 const Tabs = createBottomTabNavigator({
   LoanList: {

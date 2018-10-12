@@ -1,0 +1,21 @@
+{
+    "name" : "authentication-service",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/authentication-service/*",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+                {"target": "http://authentication-service:3000/"}
+            ]
+        },
+        "strip_path" : true,
+        "append_path" : false,
+        "methods" : ["POST"]
+    },
+    "health_check": {
+        "url": "http://authentication-service:3000/",
+        "timeout": 3
+    }
+}

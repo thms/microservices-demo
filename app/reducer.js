@@ -14,8 +14,24 @@ export const GET_LOAN = 'app/loan/LOAD';
 export const GET_LOAN_SUCCESS = 'app/loan/LOAD_SUCCESS';
 export const GET_LOAN_FAIL = 'app/loan/LOAD_FAIL';
 
-export default function reducer(state = { users: [], loans: [], user: {}, loan: {} }, action) {
+export const POST_TOKEN = 'app/token/LOAD';
+export const POST_TOKEN_SUCCESS = 'app/token/LOAD_SUCCESS';
+export const POST_TOKEN_FAIL = 'app/token/LOAD_FAIL';
+
+export function reducer(state = { users: [], loans: [], user: {}, loan: {}, token: null }, action) {
   switch (action.type) {
+    case POST_TOKEN:
+      return { ...state, loadingToken: true, token: null };
+    case POST_TOKEN_SUCCESS:
+      let token = action.payload.data.access_token;
+      return { ...state, loadingToken: false, token: token };
+    case POST_TOKEN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        token: null,
+        error: 'Error while fetching token'
+      };
     case GET_USERS:
       return { ...state, loadingUsers: true, users: [] };
     case GET_USERS_SUCCESS:
@@ -43,6 +59,7 @@ export default function reducer(state = { users: [], loans: [], user: {}, loan: 
         case GET_LOANS_SUCCESS:
           return { ...state, loadingLoans: false, loans: action.payload.data.loans };
         case GET_LOANS_FAIL:
+          console.warn('failed to load loan')
           return {
             ...state,
             loading: false,
@@ -65,6 +82,22 @@ export default function reducer(state = { users: [], loans: [], user: {}, loan: 
   }
 }
 
+export function getAccessToken() {
+  return {
+    type: POST_TOKEN,
+    payload: {
+      request: {
+        url: `/authentication-service/tokens`,
+        method: 'post',
+        data: {
+          grant_type: 'client_credentials',
+          client_id: 'mobile-app',
+          client_secret: 'mobile-app-secret'
+        }
+      }
+    }
+  }
+}
 export function getUsers() {
   return {
     type: GET_USERS,
@@ -87,7 +120,7 @@ export function getUser(id) {
   };
 }
 
-export function getLoans(borrowerId) {
+export function getLoans(token, borrowerId) {
   let url = ''
   if (borrowerId == null) {
     url = `/loan-service/loans`
@@ -98,17 +131,24 @@ export function getLoans(borrowerId) {
     type: GET_LOANS,
     payload: {
       request: {
-        url: url
+        url: url,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+
       }
     }
   };
 }
-export function getLoan(id) {
+export function getLoan(token, id) {
   return {
     type: GET_LOAN,
     payload: {
       request: {
-        url: `/loan-service/loans/${id}`
+        url: `/loan-service/loans/${id}`,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
       }
     }
   };

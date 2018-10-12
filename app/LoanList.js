@@ -10,7 +10,7 @@ class LoanList extends Component {
   };
 
   componentDidMount() {
-    this.props.getLoans(this.props.borrowerId);
+    this.props.getLoans(this.props.token, this.props.borrowerId);
   }
 
   renderItem = ({ item }) => (
@@ -51,7 +51,8 @@ const mapStateToProps = (state, ownProps) => {
   let storedLoans = state.loans.map(loan => ({ key: loan.id, ...loan }));
   return {
     loans: storedLoans,
-    borrowerId: ownProps.borrowerId || null
+    borrowerId: ownProps.borrowerId || null,
+    token: state.token
   };
 };
 

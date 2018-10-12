@@ -12,8 +12,10 @@
  /* Storage for the access token for all requests throughout the server lifecycle. */
  global.accessToken = '';
 
- /* Storage for publc key for verifying jwt's */
- /* TODO: this will not work, need to find a proper sequencing for this */
+ /* Storage for public key for verifying jwt's */
+ /* TODO: this will not work, need to find a proper sequencing for this as it needs to be done before the we require the app */
+ /* get public key(s) from authentication service */
+
  global.jwtPublicKey = 'null';
 
 var app = require('../app');
@@ -23,6 +25,8 @@ var consul = require('consul')({host: 'consul'});
 const os = require('os');
 const process = require('process');
 const axios = require('axios');
+const jwt = require('express-jwt');
+const fs = require('fs');
 
 
 /**
@@ -125,15 +129,14 @@ const getAccessToken = (serviceName, clientSecret) => {
     client_id: serviceName,
     client_secret: clientSecret
   })
-  .then(response => response.data.access_token)
+  .then(response => accessToken = response.data.access_token)
   .catch(err => console.log(err))
 }
 
-/* get public key(s) from authentication service */
 const getPublicJwtKey = () => {
-  axios.get('http://authentication-service:3000/keys/public')
-  .then(response => response.data.public_key)
-}
+   axios.get('http://authentication-service:3000/keys/public')
+   .then(response => jwtPublicKey = response.data.public_key)
+ }
 
 /**
  * Event listener for HTTP server "listening" event.
@@ -150,6 +153,6 @@ function onListening() {
   // settings work for running both consul and service locally on MacBook
   // let ipAddr = getLocalExternalIP();
   // registerService('loan-service', ipAddr, addr.port, process.pid);
-  accessToken = getAccessToken('loan-service', 'loan-secret');
-  jwtPublicKey = getPublicJwtKey();
+  getAccessToken('loan-service', 'loan-secret');
+  getPublicJwtKey();
 }

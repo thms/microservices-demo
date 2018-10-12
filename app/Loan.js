@@ -16,7 +16,7 @@ class Loan extends Component {
       id = this.props.navigation.state.params.id;
     } catch(err) {
     }
-    this.props.getLoan(id);
+    this.props.getLoan(this.props.token, id);
   }
 
   render() {
@@ -36,9 +36,10 @@ class Loan extends Component {
 }
 
 
-const mapStateToProps = ({ loan, loadingLoan }) => ({
+const mapStateToProps = ({ loan, loadingLoan, token }) => ({
   loan,
-  loadingLoan
+  loadingLoan,
+  token
 });
 
 const mapDispatchToProps = {
