@@ -1,0 +1,35 @@
+{
+  "name": "document-generation-service",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "test": "mocha -w test/**"
+  },
+  "dependencies": {
+    "appmetrics-zipkin": "^1.1.1",
+    "consul": "^0.32.0",
+    "contentful": "^7.0.5",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.12",
+    "http-errors": "~1.6.2",
+    "joi": "^13.4.0",
+    "markdown-pdf": "^9.0.0",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.17.4",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.2.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "jest": "^23.1.0",
+    "mocha": "^5.2.0"
+  }
+}
