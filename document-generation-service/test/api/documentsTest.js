@@ -34,7 +34,7 @@ describe('Documents', () => {
     it('it should return a markdown document with the variables replaced', (done) => {
       chai.request(server)
         .post('/documents')
-        .set({Accept: 'application/md'})
+        .set({Accept: 'text/markdown'})
         .send({
           data: {
             loan: {maturity: 12, amount: 15000, currency: 'GBP'},
@@ -47,10 +47,34 @@ describe('Documents', () => {
         .parse(binaryParser)
         .end((err, res) => {
           res.should.have.status(201);
-          res.headers['content-type'].should.be.equal('application/md; charset=utf-8')
+          res.headers['content-type'].should.be.equal('text/markdown; charset=utf-8')
           let template = res.body.toString()
           chai.expect(template).to.include('mike myers')
           chai.expect(template).to.include('15000 GBP')
+          done();
+        });
+    })
+
+    it('it should return a rendered html document', (done) => {
+      chai.request(server)
+        .post('/documents')
+        .set({Accept: 'text/html'})
+        .send({
+          data: {
+            loan: {maturity: 12, amount: 15000, currency: 'GBP'},
+            user: {first_name: 'mike', last_name: 'myers'},
+            contract: {date: '2019-01-23'}
+          },
+          template: templateMarkDown.toString()
+        })
+        .buffer()
+        .parse(binaryParser)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.headers['content-type'].should.be.equal('text/html; charset=utf-8')
+          let html = res.body.toString()
+          chai.expect(html).to.include('mike myers')
+          chai.expect(html).to.include('15000 GBP')
           done();
         });
     })
@@ -74,12 +98,12 @@ describe('Documents', () => {
           res.headers['content-type'].should.be.equal('application/pdf; charset=utf-8')
           pdfParse(res.body).then(data => {
             console.log(data)
-            chai.expect(data.text).to.include('mike myers')
-            chai.expect(data.text).to.include('15000 GBP')
+            chai.expect(data.text).to.include('mike myers')
+            chai.expect(data.text).to.include('15000 GBP')
             done();
           })
         });
-    }).timeout(7000)
+    }).timeout(1000)
 
   });
 

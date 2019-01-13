@@ -82,3 +82,24 @@ const Handlebars = require('handlebars')
 const fs = require('fs')
 let template = fs.readFileSync('./test/templates/termsheet.md').toString()
 let t = Handlebars.compile(template)
+
+
+## Alternative with showdown and puppeteer
+const showdown  = require('showdown')
+const fs = require('fs')
+let converter = new showdown.Converter()
+let template = fs.readFileSync('./test/templates/termsheet.md').toString()
+let html      = converter.makeHtml(template)
+fs.writeFile('./termsheet.html', html)
+
+const puppeteer = require('puppeteer');
+
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  //await page.goto('https://news.ycombinator.com', {waitUntil: 'networkidle2'});
+  await page.setContent(html)
+  await page.pdf({path: 'termsheet.pdf', format: 'A4'});
+
+  await browser.close();
+})();

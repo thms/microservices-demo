@@ -1,5 +1,7 @@
 const express = require('express');
 const Handlebars = require('handlebars');
+const showdown  = require('showdown');
+const puppeteer = require('puppeteer');
 const MarkdownPDF = require('markdown-pdf')();
 const Joi = require('joi');
 const router = express.Router();
@@ -29,21 +31,37 @@ router.post('/', function(req, res, next) {
     let template = req.body.template
     // handlebars replacement
     let document = Handlebars.compile(template)(req.body.data)
-    if (req.headers['accept'] == 'application/md') {
-      res.status(201)
-      res.type('application/md');
-      res.send(document)
-    } else {
-      // markdown to pdf conversion:
-      MarkdownPDF.from.string(document).to.buffer(function (err, pdf) {
-        res.status(201);
-        res.type('application/pdf; charset=utf-8');
-        res.send(pdf);
-        fs.writeFile('./termsheet.pdf', pdf)
-      });
+    res.status(201)
+    switch(req.headers['accept']) {
+      case 'text/markdown':
+        res.type('text/markdown; charset=utf-8');
+        res.send(document)
+        break
+      case 'text/html':
+        let converter = new showdown.Converter()
+        let html = converter.makeHtml(document)
+        res.status(201)
+        res.type('text/html; charset=utf-8')
+        res.send(html)
+        break
+      case 'application/pdf':
+        (async () => {
+          let converter = new showdown.Converter()
+          let html = converter.makeHtml(document)
+          const browser = await puppeteer.launch();
+          const page = await browser.newPage();
+          await page.setContent(html)
+          let pdf = await page.pdf({format: 'A4'});
+          res.status(201)
+          res.type('application/pdf; charset=utf-8');
+          await browser.close();
+          res.send(pdf);
+        })();
+        break
+      default:
+      res.status(406)
     }
   }
 });
-
 
 module.exports = router;
