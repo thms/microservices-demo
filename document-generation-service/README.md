@@ -97,9 +97,19 @@ const puppeteer = require('puppeteer');
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  //await page.goto('https://news.ycombinator.com', {waitUntil: 'networkidle2'});
   await page.setContent(html)
-  await page.pdf({path: 'termsheet.pdf', format: 'A4'});
-
+  await page.pdf({
+    path: 'termsheet.pdf',
+    format: 'A4',
+    displayHeaderFooter: true,
+    headerTemplate: '<div style="fontsize:100px"><b>Hello world<b/><div class="date"></div></div>',
+    footerTemplate: '<b>Page</b> <span class="pageNumber"></span> of <span class="totalPages"></span>',
+    margin: {
+      top: '100px',
+      bottom: '100px',
+      left: '100px',
+      right: '100px'
+    }
+  });
   await browser.close();
 })();
