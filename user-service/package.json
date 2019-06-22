@@ -19,7 +19,7 @@
     "mysql2": "^1.5.3",
     "node-vault": "^0.8.0",
     "nodemon": "^1.17.4",
-    "sequelize": "^4.37.10",
+    "sequelize": "^5.8.11",
     "sequelize-cli": "^4.0.0",
     "sqlite3": "^4.0.0"
   },
