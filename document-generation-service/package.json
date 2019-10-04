@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "test": "mocha -w test/**"
+    "test": "mocha -w test/**",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "appmetrics-zipkin": "^1.1.1",
@@ -23,7 +25,8 @@
     "nodemon": "^1.17.4",
     "pdf-parse": "^1.1.1",
     "puppeteer": "^1.11.0",
-    "showdown": "^1.9.0"
+    "showdown": "^1.9.0",
+    "snyk": "^1.230.5"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -33,5 +36,6 @@
     "eslint-plugin-import": "^2.12.0",
     "jest": "^23.1.0",
     "mocha": "^5.2.0"
-  }
+  },
+  "snyk": true
 }
