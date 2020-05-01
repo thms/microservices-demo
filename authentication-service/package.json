@@ -6,7 +6,9 @@
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
     "test": "mocha -w test/**",
-    "coverage": "nyc --reporter=text mocha --exit test/**"
+    "coverage": "nyc --reporter=text mocha --exit test/**",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "appmetrics-zipkin": "^1.1.1",
@@ -21,12 +23,14 @@
     "mysql2": "^1.6.1",
     "nodemon": "^1.17.5",
     "sequelize": "^4.38.0",
-    "sequelize-cli": "^4.1.1"
+    "sequelize-cli": "^4.1.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^4.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.0.1"
-  }
+  },
+  "snyk": true
 }
