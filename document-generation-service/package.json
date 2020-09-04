@@ -15,7 +15,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-handlebars": "^3.0.0",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.4.5",
     "http-errors": "~1.6.2",
     "joi": "^13.4.0",
     "markdown-pdf": "^9.0.0",
