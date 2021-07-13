@@ -1,0 +1,158 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+ var appzip = require('appmetrics-zipkin')({
+   host: 'zipkin',
+   port: 9411,
+   serviceName:'invoice-service',
+   sampleRate: 1.0
+ });
+ /* Storage for the access token for all requests throughout the server lifecycle. */
+ global.accessToken = '';
+
+ /* Storage for public key for verifying jwt's */
+ /* TODO: this will not work, need to find a proper sequencing for this as it needs to be done before the we require the app */
+ /* get public key(s) from authentication service */
+
+ global.jwtPublicKey = 'null';
+
+var app = require('../app');
+var debug = require('debug')('invoice-service:server');
+var http = require('http');
+var consul = require('consul')({host: 'consul'});
+const os = require('os');
+const process = require('process');
+const axios = require('axios');
+const jwt = require('express-jwt');
+const fs = require('fs');
+
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/* get local ip address, this works if the service runs locally, but not in docker*/
+const getLocalExternalIP = () => [].concat(...Object.values(os.networkInterfaces()))
+  .filter(details => details.family === 'IPv4' && !details.internal)
+  .pop().address
+
+/* register service with consul */
+const registerService = (serviceName, externalAddress, port, pid) => {
+  consul.agent.service.register(
+    {
+      name: serviceName,
+      id: serviceName + '-' + pid,
+      tags: ['node', 'rest'],
+      address: externalAddress,
+      port: port,
+      check: {
+        http: 'http://' + externalAddress + ':' + port + '/',
+        interval: '5s'
+      }
+    },
+    err => {
+      if (err) throw(err);
+    }
+  );
+}
+/* get the access token from the authentication service */
+const getAccessToken = (serviceName, clientSecret) => {
+  axios.post('http://authentication-service:3000/tokens', {
+    grant_type: 'client_credentials',
+    client_id: serviceName,
+    client_secret: clientSecret
+  })
+  .then(response => accessToken = response.data.access_token)
+  .catch(err => console.log(err))
+}
+
+const getPublicJwtKey = () => {
+   axios.get('http://authentication-service:3000/keys/public')
+   .then(response => jwtPublicKey = response.data.public_key)
+ }
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+
+  // register service instance with consul:
+  // settings work for running both consul and service locally on MacBook
+  // let ipAddr = getLocalExternalIP();
+  // registerService('invoice-service', ipAddr, addr.port, process.pid);
+  getAccessToken('invoice-service', 'invoice-secret');
+  getPublicJwtKey();
+}

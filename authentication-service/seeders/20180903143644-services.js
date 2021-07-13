@@ -10,6 +10,7 @@ module.exports = {
       {id: 5, name: 'user-service', secret: 'user-secret', token: null, roles: JSON.stringify(['service']), scopes: JSON.stringify([])},
       {id: 6, name: 'viban-service', secret: 'viban-secret', token: null, roles: JSON.stringify(['service']), scopes: JSON.stringify([])},
       {id: 7, name: 'mobile-app', secret: 'mobile-app-secret', token: null, roles: JSON.stringify(['service']), scopes: JSON.stringify(['user:read', 'loan:read'])},
+      {id: 8, name: 'invoice-service', secret: 'invoice-secret', token: null, roles: JSON.stringify(['service']), scopes: JSON.stringify([])},
     ], {});
   },
 

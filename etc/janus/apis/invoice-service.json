@@ -1,0 +1,21 @@
+{
+    "name" : "invoice-service",
+    "active" : true,
+    "proxy" : {
+        "preserve_host" : false,
+        "listen_path" : "/invoice-service/*",
+        "upstreams" : {
+            "balancing": "roundrobin",
+            "targets": [
+              {"target": "http://invoice-service:3000/"}
+            ]
+        },
+        "strip_path" : true,
+        "append_path" : false,
+        "methods" : ["GET"]
+    },
+    "health_check": {
+        "url": "http://invoice-service:3000/",
+        "timeout": 3
+    }
+}

@@ -8,8 +8,8 @@ router.get('/', function(req, res, next) {
     service: 'user-service',
     version: '1.0.1',
     commit: '45ceea0def7b8e25f6ae4c24994f6b0897b5fcad',
-    maintainer: 'mike@kreditech.com',
-    gitrepo: 'https://github.com/KreditechSSL/user-service',
+    maintainer: 'mike@thms.com',
+    gitrepo: 'https://github.com/thms/user-service',
     uptime: process.uptime()
   });
 });

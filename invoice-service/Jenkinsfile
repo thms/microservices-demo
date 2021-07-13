@@ -1,0 +1,36 @@
+pipeline {
+  agent any
+  stages{
+  stage('Git') {
+   steps{
+       checkout scm
+       }
+   }
+    stage('Setup') {
+      steps{
+        sh '''
+          cd invoice-service
+          npm install
+          '''
+      }
+    }
+    stage('Test') {
+      steps{
+          sh '''
+            cd invoice-service
+            ./node_modules/mocha/bin/mocha test/**
+            '''
+      }
+    }
+    stage('Docker') {
+      steps{
+          sh '''
+          cd invoice-service
+          docker build -f Dockerfile -t 10.94.1.14:5000/invoice-service:${BUILD_NUMBER}-SNAPSHOT .
+          docker push 10.94.1.14:5000/invoice-service:${BUILD_NUMBER}-SNAPSHOT
+          '''
+      }
+    }
+
+  }
+}

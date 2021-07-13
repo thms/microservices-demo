@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "root",
+    "password": "mysql-root-password",
+    "database": "invoice_service_development",
+    "host": "db",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "mysql-root-password",
+    "database": "invoice_service_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "protocol":"tcp"
+  },
+  "production": {
+    "username": "root",
+    "password": "",
+    "database": "invoice_service_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

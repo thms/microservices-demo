@@ -32,14 +32,14 @@ const checkDependencies = (dependencies) => {
 
 
 router.get('/', function(req, res, next) {
-  Promise.all(checkDependencies(dependencies)).then(() => 
+  Promise.all(checkDependencies(dependencies)).then(() =>
   res.send({
     status: 'ok',
     service: 'loan-factory-service',
     version: '1.0.2',
     commit: '45ceea0def7b8e25f6ae4c24994f6b0897b5fcad',
-    maintainer: 'mike@kreditech.com',
-    gitrepo: 'https://github.com/KreditechSSL/loan-factory-service',
+    maintainer: 'mike@thms.com',
+    gitrepo: 'https://github.com/thms/loan-factory-service',
     uptime: process.uptime(),
     dependencies: status
   })
