@@ -14,7 +14,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
-    "express-handlebars": "^3.0.0",
+    "express-handlebars": "^5.3.1",
     "handlebars": "^4.0.12",
     "http-errors": "~1.6.2",
     "joi": "^13.4.0",
