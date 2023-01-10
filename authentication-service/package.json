@@ -12,7 +12,7 @@
     "appmetrics-zipkin": "^1.1.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
+    "debug": "~3.1.0",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "joi": "^13.6.0",
@@ -20,7 +20,7 @@
     "morgan": "~1.9.0",
     "mysql2": "^1.6.1",
     "nodemon": "^1.17.5",
-    "sequelize": "^4.38.0",
+    "sequelize": "^5.1.0",
     "sequelize-cli": "^4.1.1"
   },
   "devDependencies": {
