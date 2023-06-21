@@ -19,8 +19,8 @@
     "jsonwebtoken": "^8.3.0",
     "loanjs": "^1.0.2",
     "morgan": "~1.9.0",
-    "nock": "^10.0.0",
-    "nodemon": "^1.17.4",
+    "nock": "^11.0.0",
+    "nodemon": "^2.0.17",
     "tcp-ping": "^0.1.1"
   },
   "devDependencies": {
