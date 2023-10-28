@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "appmetrics-zipkin": "^1.1.1",
-    "axios": "^0.18.0",
+    "axios": "^1.6.0",
     "consul": "^0.32.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
