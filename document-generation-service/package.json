@@ -18,9 +18,9 @@
     "handlebars": "^4.0.12",
     "http-errors": "~1.6.2",
     "joi": "^13.4.0",
-    "markdown-pdf": "^9.0.0",
+    "markdown-pdf": "^11.0.0",
     "morgan": "~1.9.0",
-    "nodemon": "^1.17.4",
+    "nodemon": "^2.0.0",
     "pdf-parse": "^1.1.1",
     "puppeteer": "^1.11.0",
     "showdown": "^1.9.0"
