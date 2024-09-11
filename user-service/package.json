@@ -17,10 +17,10 @@
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "mysql2": "^1.5.3",
-    "node-vault": "^0.8.0",
-    "nodemon": "^1.17.4",
+    "node-vault": "^0.10.0",
+    "nodemon": "^3.0.0",
     "sequelize": "^4.37.10",
-    "sequelize-cli": "^4.0.0",
+    "sequelize-cli": "^6.5.1",
     "sqlite3": "^4.0.0"
   },
   "devDependencies": {
