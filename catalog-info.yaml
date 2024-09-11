@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: microservices-demo
+  annotations:
+    github.com/project-slug: thms/microservices-demo
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - title: Getting Started
+      url: https://github.com/thms/microservices-demo/README.md
+      type: Readme
+      icon: github
+spec:
+  type: microservice
+  lifecycle: experimental
+  owner: thms
