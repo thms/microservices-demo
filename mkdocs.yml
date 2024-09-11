@@ -1,0 +1,14 @@
+site_name: Microservices-Demo
+nav:
+  - Home: 'index.md'
+  - Summary: 'summary.md'
+  - Readme: 'readme.md'
+  - Architecture: 'architecture.md'
+  - Data Model: 'data-model.md'
+  - Business Capabilities: 'business-capabilities.md'
+  - Technical Capabilities: 'technical-capabilities.md'
+plugins:
+  - techdocs-core
+  - 'kroki':
+      inline: true
+      FencePrefix: ''
