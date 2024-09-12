@@ -13,7 +13,7 @@
     "consul": "^0.32.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "express": "~4.16.0",
+    "express": "~4.21.0",
     "http-errors": "~1.6.2",
     "joi": "^13.4.0",
     "jsonwebtoken": "^8.3.0",
