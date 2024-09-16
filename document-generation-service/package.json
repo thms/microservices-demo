@@ -14,7 +14,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
-    "express-handlebars": "^3.0.0",
+    "express-handlebars": "^7.0.0",
     "handlebars": "^4.0.12",
     "http-errors": "~1.6.2",
     "joi": "^13.4.0",
@@ -22,7 +22,7 @@
     "morgan": "~1.9.0",
     "nodemon": "^1.17.4",
     "pdf-parse": "^1.1.1",
-    "puppeteer": "^1.11.0",
+    "puppeteer": "^18.2.0",
     "showdown": "^1.9.0"
   },
   "devDependencies": {
