@@ -18,9 +18,9 @@
     "joi": "^13.4.0",
     "jsonwebtoken": "^8.3.0",
     "loanjs": "^1.0.2",
-    "morgan": "~1.9.0",
+    "morgan": "~1.10.1",
     "nock": "^10.0.0",
-    "nodemon": "^1.17.4",
+    "nodemon": "^2.0.0",
     "tcp-ping": "^0.1.1"
   },
   "devDependencies": {
