@@ -10,7 +10,7 @@
     "pact_do_not_track": true
   },
   "dependencies": {
-    "@pact-foundation/pact": "^5.9.1",
+    "@pact-foundation/pact": "^9.0.0",
     "consul": "^0.32.0",
     "debug": "~2.6.9",
     "express": "~4.16.0",
